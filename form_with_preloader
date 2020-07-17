@@ -1,0 +1,128 @@
+install  npm install ngx-loading-x --save
+app.html
+<div NgxLoadingXBlur [show]="load">
+
+  <div class="container-fluid">
+    <div class="p-5 mt-5 shadow rounded bg-light" style="max-width: 500px; margin: 0 auto;">
+      <div *ngIf="register" class="alert alert-success" role="alert">
+        Dummy account sccessfully created ??
+      </div>
+      <form class="mt-4" [formGroup]="ngxLoadingXForm" (ngSubmit)="loginForm()" autocomplete="off">
+  
+        <div class="form-group">
+          <label for="id">Email</label>
+          <input type="email" class="form-control" formControlName="email" id="email"
+            placeholder="ngxloadingx@mail.com"
+            aria-describedby="Email Address" [ngClass]="{'is-invalid': (ngxLoadingXForm.get('email').touched ||
+            ngxLoadingXForm.get('email').dirty) && !ngxLoadingXForm.get('email').valid}">
+          <div
+            *ngIf="ngxLoadingXForm.get('email').invalid &&  ngxLoadingXForm.get('email').touched">
+            <small *ngIf="ngxLoadingXForm.get('email').errors?.pattern" class="text-danger pb-2">Input your mail correctly</small>
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="password">password</label>
+          <input type="" id="password" formControlName="password" class="form-control" placeholder="90192930"
+            aria-describedby="password" [ngClass]="{'is-invalid': (ngxLoadingXForm.get('password').touched ||
+            ngxLoadingXForm.get('password').dirty) && !ngxLoadingXForm.get('password').valid}">
+        </div>
+  
+        <input [disabled]="!ngxLoadingXForm.valid" class="btn btn-success w-100 mt-4" type="submit"
+          value="Register">
+      </form>
+    </div>
+  </div>
+  </div>
+  
+  <ngx-loading-x [show]="load">
+  </ngx-loading-x>
+
+
+
+.ts
+import { Component, OnInit } from '@angular/core';
+  import {FormControl,FormGroup,FormBuilder,Validators} from '@angular/forms';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent implements OnInit{
+  title = 'app works!';
+  public load = false;
+
+  ngxLoadingXForm: FormGroup;
+  register = false;
+
+  constructor(private fb: FormBuilder, ) { }
+
+  ngOnInit() {
+    this.ngxLoadingXForm = this.fb.group({
+      email: ['', Validators.required],
+      password: ['', Validators.required],
+    })
+  }
+
+  loginForm() {
+    this.load = true;
+
+    setTimeout(() => {
+      this.load = false,
+        this.register = true;
+    }, 5000)
+  }
+  
+}
+
+
+appmodule.ts
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+ import { Ng2SearchPipeModule } from 'ng2-search-filter'; //importing the module
+import { Ng2OrderModule } from 'ng2-order-pipe'; //importing the module
+import {NgxPaginationModule} from 'ngx-pagination'; // <-- import the module
+import {HttpClientModule} from '@angular/common/http';
+import { AppComponent } from './app.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatDialogModule} from '@angular/material/dialog';
+import { EditCourseComponent } from './edit-course/edit-course.component';
+import { ToastrModule } from 'ngx-toastr';
+import { NgxLoadingXConfig, POSITION, SPINNER, NgxLoadingXModule } from 'ngx-loading-x';
+
+const ngxLoadingXConfig: NgxLoadingXConfig = {
+  show: false,
+  bgBlur: 2,
+  bgOpacity: 5,
+  bgLogoUrl: '',
+  bgLogoUrlPosition: POSITION.topLeft,
+  bgLogoUrlSize: 100,
+  spinnerType: SPINNER.wanderingCubes,
+  spinnerSize: 120,
+  spinnerColor: '#dd0031',
+  spinnerPosition: POSITION.centerCenter,
+}
+
+
+ @NgModule({
+  declarations: [
+    AppComponent,
+    EditCourseComponent
+  ],
+  imports: [
+    BrowserModule,    NgxLoadingXModule.forRoot(ngxLoadingXConfig),
+
+    FormsModule ,    ToastrModule.forRoot() // ToastrModule added
+,
+    HttpClientModule,ReactiveFormsModule,MatDialogModule,
+    Ng2SearchPipeModule, //including into imports
+    Ng2OrderModule, // importing the sorting package here
+    NgxPaginationModule,BrowserAnimationsModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
