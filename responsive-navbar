@@ -1,0 +1,95 @@
+.html
+
+<div class="main">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <nav class="navbar navbar-expand-md navbar-blue">
+          <a>
+            <span class="site-name">Angular Bootstrap</span>
+          </a>
+          <button class="navbar-toggler ml-auto custom-toggler" type="button" data-toggle="collapse"
+                  (click)="isCollapsed = !isCollapsed">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <!-- The menu items -->
+          <!--<div class="collapse navbar-collapse" id="navbarSupportedContent">-->
+          <div class="collapse navbar-collapse" [ngbCollapse]="isCollapsed" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+              <li class="navbar-link"><a class="text-center" href="https://angular.io/tutorial">Tour of Heroes</a>
+              </li>
+              <li class="navbar-link"><a class="text-center" href="https://github.com/angular/angular-cli/wiki">CLI Documentation</a>
+              </li>
+              <li class="navbar-link"><a class="text-center" href="https://blog.angular.io/">Angular Blog</a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+.ts
+isCollapsed: boolean = true;
+
+
+.css
+.main{
+  background-color: #1B75BC;
+  float: left;
+  width: 100%;
+  font-family: open sans;
+}
+
+.navbar-blue{
+  background-color: #1B75BC;
+  border-color: transparent;
+  margin-bottom: 0px;
+}
+
+.site-name{
+  color: white;
+}
+
+.navbar .navbar-nav li{
+  padding: 0px 20px;
+}
+
+.navbar .navbar-nav li a{
+  color: white;
+  font-size: 16px;
+  padding: 13px 0px;
+}
+
+.custom-toggler.navbar-toggler {
+  border-color: rgb(255,255,255);
+}
+.custom-toggler .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,255,255, 1)' stroke-width='2' stroke-
+
+linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+}
+
+
+
+appmodule
+import { NgbModule} from "@ng-bootstrap/ng-bootstrap";
+
+
+import { AppComponent } from './app.component';
+import { NavbarComponent } from './navbar/navbar.component';
+
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    NavbarComponent
+  ],
+  imports: [
+    BrowserModule,
+    NgbModule,
+    NgbModule,
+  ],
